@@ -28,12 +28,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Remove this line if you don't want to use Local Datastore features or want to use cachePolicy.
         Parse.enableLocalDatastore()
         
-        let parseConfiguration = ParseClientConfiguration(block: { (ParseMutableClientConfiguration) -> Void in
-            ParseMutableClientConfiguration.applicationId = "myappid"
-            ParseMutableClientConfiguration.clientKey = "mymasterkey"
-            ParseMutableClientConfiguration.server = "Your Server URL Here"
-        })
+        //get keys from key.plist file
+        let path = Bundle.main.path(forResource: "keys", ofType: ".plist")
+        let server = (NSDictionary(contentsOfFile: path!)?["ParseServerCredentials"] as! NSDictionary)["server"] as! String
+        let clientKey = (NSDictionary(contentsOfFile: path!)?["ParseServerCredentials"] as! NSDictionary)["clientKey"] as! String
+        let applicationId = (NSDictionary(contentsOfFile: path!)?["ParseServerCredentials"] as! NSDictionary)["applicationId"] as! String
         
+        
+        let parseConfiguration = ParseClientConfiguration(block: { (ParseMutableClientConfiguration) -> Void in
+            ParseMutableClientConfiguration.applicationId = applicationId
+            ParseMutableClientConfiguration.clientKey = clientKey
+            ParseMutableClientConfiguration.server = server
+            
+        })
         Parse.initialize(with: parseConfiguration)
 
 
