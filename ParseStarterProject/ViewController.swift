@@ -16,31 +16,18 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let testObject = PFObject(className: "TestObject2")
+        let object = PFObject(className: "Test")
+        object.add("Viraj", forKey: "name")
+        object.add("26", forKey: "age")
+        object.add("Male", forKey: "gender")
         
-        testObject["foo"] = "bar"
-        
-        testObject.saveInBackground { (success, error) -> Void in
-            
-            // added test for success 11th July 2016
-            
-            if success {
-                
-                print("Object has been saved.")
-                
-            } else {
-                
-                if error != nil {
-                    
-                    print (error)
-                    
-                } else {
-                    
-                    print ("Error")
-                }
-                
+        object.saveInBackground { (saved, error) in
+            if error != nil{
+                print("Error\(error)")
             }
-            
+            else if saved{
+                print("saved object check dash board")
+            }
         }
         
     }
