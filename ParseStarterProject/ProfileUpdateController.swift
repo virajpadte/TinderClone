@@ -52,7 +52,8 @@ class ProfileUpdateController: UIViewController,UIImagePickerControllerDelegate,
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            imageView.image = pickedImage
+            profilePicture = pickedImage
+            imageView.image = profilePicture
             self.dismiss(animated: true, completion: nil)
         }
         else{
