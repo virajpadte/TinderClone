@@ -54,6 +54,8 @@ class ProfileUpdateController: UIViewController,UIImagePickerControllerDelegate,
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
             profilePicture = pickedImage
             imageView.image = profilePicture
+            updateProfileButtontTitle = "Update profile picture"
+            updateProfileButton.setTitle(updateProfileButtontTitle, for: UIControlState.normal)
             self.dismiss(animated: true, completion: nil)
         }
         else{
@@ -83,7 +85,7 @@ class ProfileUpdateController: UIViewController,UIImagePickerControllerDelegate,
                     if let imageFile = PFFile(name: (PFUser.current()?.username)?.appending(".jpg"), data: imageData){
                         currentUser.setObject(imageFile, forKey: "profileImage")
                         print("set file")
-                        let loading = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
+                        let loading = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
                         loading.frame = CGRect(x: 0, y: 0, width: 80, height: 80)
                         loading.center = self.view.center
                         loading.hidesWhenStopped = true
