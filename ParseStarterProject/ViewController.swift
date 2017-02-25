@@ -66,8 +66,8 @@ class ViewController: UIViewController {
                         print("Successfull sign up")
                         //notify the user
                         let alert = UIAlertController(title: "Success", message: "Thanks for signing up", preferredStyle: UIAlertControllerStyle.alert)
-                        alert.addAction(UIAlertAction.init(title: "Ok", style: UIAlertActionStyle.default, handler: { (okPressed) in
-                            alert.dismiss(animated: true, completion: nil)
+                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: { (alterted) in
+                            self.performSegue(withIdentifier: "toProfileUpdate", sender: self)
                         }))
                         self.present(alert, animated: true, completion: nil)
                         self.username.text = ""
@@ -94,7 +94,7 @@ class ViewController: UIViewController {
                         print(loggedInUser)
                         //notify the user
                         print("User logged in")
-                        
+                        self.performSegue(withIdentifier: "toProfileUpdate", sender: self)
                     }
                 })
             }
@@ -121,6 +121,39 @@ class ViewController: UIViewController {
             loginButton.setTitle("Login", for: .normal)
             signupButton.setTitle("Sign Up", for: .normal)
             newUser = false
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        //before segue get the image:
+        if segue.identifier == "toProfileUpdate"{
+            let query = PFUser.current()
+            if let imageFile = query?.object(forKey: "profileImage") as? PFFile{
+                imageFile.getDataInBackground(block: { (imagedata, error) in
+                    if error != nil{
+                        print("Error \(error)")
+                    }
+                    else{
+                        if let profileImageData = imagedata{
+                            if let profileImage = UIImage(data: profileImageData){
+                                let destinationViewController = segue.destination as! ProfileUpdateController
+                                //set retrived image
+                                destinationViewController.profilePicture = profileImage
+                                print("set retrived image")
+                                destinationViewController.updateProfileButtontTitle = "Update profile picture"
+                            }
+                        }
+                    }
+                })
+            }
+            else{
+                let destinationViewController = segue.destination as! ProfileUpdateController
+                //set retrived image
+                destinationViewController.profilePicture = UIImage(named: "addPerson.jpg")!
+                print("set backup image")
+                destinationViewController.updateProfileButtontTitle = "Set a profile picture"
+                
+            }
         }
     }
 }
