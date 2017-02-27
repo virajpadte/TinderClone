@@ -72,10 +72,6 @@
                                     <action selector="loginProcess:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iWh-b2-PQ7"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8aW-4T-lWe">
-                                <rect key="frame" x="61" y="409" width="269" height="226"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -83,7 +79,6 @@
                         <outlet property="loginButton" destination="Kyn-r2-ec6" id="6YL-BJ-YZD"/>
                         <outlet property="password" destination="TBJ-hj-v9J" id="1EM-Q0-To3"/>
                         <outlet property="signupButton" destination="c9f-3w-kNI" id="y6u-Bi-V3a"/>
-                        <outlet property="testImage" destination="8aW-4T-lWe" id="bt4-Rp-tBp"/>
                         <outlet property="username" destination="VcF-Hh-M5H" id="WWg-bM-zqh"/>
                         <segue destination="kTZ-AN-j9F" kind="show" identifier="toProfileUpdate" id="fiq-Gm-tIe"/>
                     </connections>
