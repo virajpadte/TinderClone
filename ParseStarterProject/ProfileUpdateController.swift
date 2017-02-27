@@ -30,6 +30,46 @@ class ProfileUpdateController: UIViewController,UIImagePickerControllerDelegate,
         super.viewDidLoad()
         print("hi new ")
         // Do any additional setup after loading the view.
+        //set profileImage
+        let query = PFUser.query()
+        query?.whereKey("username", equalTo: PFUser.current()?.username)
+        query?.getFirstObjectInBackground { (object, error) in
+            if error != nil {
+                print("Error occured")
+                print(error)
+            }
+            else{
+                print("no error")
+                print(object)
+                //extracts the data profileImage
+                if let profileImageFile = object?.object(forKey: "profileImage") as? PFFile{
+                    profileImageFile.getDataInBackground(block: { (profileImageData, error) in
+                        //got data
+                        self.imageView.image = UIImage(data: profileImageData!)
+                    })
+                    if let gender = object?.object(forKey: "gender") as? Int{
+                        print(gender)
+                        if gender == 1{
+                            self.userGender.setOn(false, animated: false)
+                            
+                        }else{
+                            self.userGender.setOn(true, animated: false)
+                        }
+                        if let genderInterested = object?.object(forKey: "interestedGender") as? Int{
+                            print(genderInterested)
+                            if genderInterested == 1{
+                                self.interestedGender.setOn(false, animated: false)
+                            }
+                            else{
+                                self.interestedGender.setOn(true, animated: false)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //set initialize or update image mode
+        updateProfileButton.setTitle(updateProfileButtontTitle, for: UIControlState.normal)
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,9 +78,9 @@ class ProfileUpdateController: UIViewController,UIImagePickerControllerDelegate,
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        imageView.image = profilePicture
-        updateProfileButton.setTitle(updateProfileButtontTitle, for: UIControlState.normal)
+        print("will appear")
     }
+    
     @IBAction func updateProfileImage(_ sender: Any) {
         print("pickImage")
         let imagePicker = UIImagePickerController()
